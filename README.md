@@ -21,19 +21,19 @@ Control de hilos con wait/notify. Productor/consumidor.
 Al revisar el resultado obtenido podemos darnos cuenta que el alto consumo corresponde a la clase Consumidor y se debe a que hay hilos activos aún cuando no hay elementos en la lista para "consumir".
 
 
-![alt text](https://raw.githubusercontent.com/Killersys/ARSW-LAB3/master/img/1.png)
+![]((https://github.com/Killersys/ARSW-LAB3/blob/master/img/1.png)
 
 
 2. Haga los ajustes necesarios para que la solución use más eficientemente la CPU, teniendo en cuenta que -por ahora- la producción es lenta y el consumo es rápido. Verifique con JVisualVM que el consumo de CPU se reduzca.
 
-![](https://raw.githubusercontent.com/Killersys/ARSW-LAB3/master/img/2.png)
+![](https://github.com/Killersys/ARSW-LAB3/blob/master/img/2.png)
 
 3. Haga que ahora el productor produzca muy rápido, y el consumidor consuma lento. Teniendo en cuenta que el productor conoce un límite de Stock (cuantos elementos debería tener, a lo sumo en la cola), haga que dicho límite se respete. Revise el API de la colección usada como cola para ver cómo garantizar que dicho límite no se supere. Verifique que, al poner un límite pequeño para el 'stock', no haya consumo alto de CPU ni errores.
 
-![](https://raw.githubusercontent.com/Killersys/ARSW-LAB3/master/img/3.png)
+![]((https://github.com/Killersys/ARSW-LAB3/blob/master/img/3.png)
 
 
-![](https://raw.githubusercontent.com/Killersys/ARSW-LAB3/master/img/4.png)
+![]((https://github.com/Killersys/ARSW-LAB3/blob/master/img/4.png)
 
 #### Parte II. – Antes de terminar la clase.
 
