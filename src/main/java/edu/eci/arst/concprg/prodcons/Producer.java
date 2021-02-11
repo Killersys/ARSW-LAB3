@@ -21,20 +21,23 @@ public class Producer extends Thread {
     private int dataSeed = 0;
     private Random rand=null;
     private final long stockLimit;
+    private Object mutex;
 
-    public Producer(Queue<Integer> queue,long stockLimit) {
+    public Producer(Queue<Integer> queue,long stockLimit, Object mutex) {
         this.queue = queue;
         rand = new Random(System.currentTimeMillis());
         this.stockLimit=stockLimit;
-    }
+        this.mutex = mutex;}
 
     @Override
     public void run() {
         while (true) {
-
             dataSeed = dataSeed + rand.nextInt(100);
             System.out.println("Producer added " + dataSeed);
-            queue.add(dataSeed);
+            synchronized (mutex) {
+                queue.add(dataSeed);
+                if(queue.size() == stockLimit){
+                    mutex.notify();
             
             try {
                 Thread.sleep(1000);
@@ -43,5 +46,5 @@ public class Producer extends Thread {
             }
 
         }
-    }
-}
+            }}}}   
+    
