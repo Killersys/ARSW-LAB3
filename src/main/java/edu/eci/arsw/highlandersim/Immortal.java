@@ -17,6 +17,8 @@ public class Immortal extends Thread {
 
     private final Random r = new Random(System.currentTimeMillis());
 
+	private boolean pausa;
+	private boolean detener;
 
     public Immortal(String name, List<Immortal> immortalsPopulation, int health, int defaultDamageValue, ImmortalUpdateReportCallback ucb) {
         super(name);
@@ -25,35 +27,44 @@ public class Immortal extends Thread {
         this.immortalsPopulation = immortalsPopulation;
         this.health = health;
         this.defaultDamageValue=defaultDamageValue;
+        pausa = false;
+        detener = false;
+    }
+    public synchronized void pauseImmortal()
+    {
+    	pausa = true;
     }
 
+    public synchronized void resumeImmortal()
+    {
+    	pausa = false;
+    	this.notify();
+    }
+    
     public void run() {
 
-        while (true) {
-            Immortal im;
-
-            int myIndex = immortalsPopulation.indexOf(this);
-
-            int nextFighterIndex = r.nextInt(immortalsPopulation.size());
-
-            //avoid self-fight
-            if (nextFighterIndex == myIndex) {
-                nextFighterIndex = ((nextFighterIndex + 1) % immortalsPopulation.size());
-            }
-
-            im = immortalsPopulation.get(nextFighterIndex);
-
-            this.fight(im);
-
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-    }
+    	while (!detener) {
+        	try{
+	            Immortal im;
+	            synchronized(this){
+	            	if (pausa){
+	            		wait();}}
+				    int myIndex = immortalsPopulation.indexOf(this);
+	
+				    int nextFighterIndex = r.nextInt(immortalsPopulation.size());
+	
+				    //avoid self-fight
+				    if (nextFighterIndex == myIndex) {
+				        nextFighterIndex = ((nextFighterIndex + 1) % immortalsPopulation.size());}
+	
+				    im = immortalsPopulation.get(nextFighterIndex);
+	
+				    this.fight(im);
+	
+				    try {
+				        Thread.sleep(1);} 
+				    catch (InterruptedException e) {
+				        e.printStackTrace();}} catch(InterruptedException e) {e.printStackTrace();}}}
 
     public void fight(Immortal i2) {
 
@@ -81,4 +92,5 @@ public class Immortal extends Thread {
         return name + "[" + health + "]";
     }
 
+ 
 }
