@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 public class HostBlackListsValidator {
 
     private static final int BLACK_LIST_ALARM_COUNT=5;
+    private boolean fin = false;
     
     /**
      * Check the given host's IP address in all the available black lists,
@@ -43,7 +44,7 @@ public class HostBlackListsValidator {
         int inicio = 0;
         int fin = inicio + espacio;
         for (int i=0; i<N; i++){
-    		HostBLThread running = new HostBLThread(ipaddress, inicio, fin, skds);
+    		HostBLThread running = new HostBLThread(ipaddress, inicio, fin, skds,this);
     		running.start();
     		threads.add(running);
     		inicio = fin + 1;
@@ -70,6 +71,11 @@ public class HostBlackListsValidator {
         return blackListOcurrences;
     }
     
+    public void setFin(boolean fin){
+    	this.fin = fin;}
+    
+    public boolean getFin(){
+    	return fin;}
     
     private static final Logger LOG = Logger.getLogger(HostBlackListsValidator.class.getName());
     
